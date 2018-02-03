@@ -1,0 +1,90 @@
+/**
+ * Created by ANUPYA on 2018-02-02.
+ */
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
+import android.os.Handler;
+import java.util.Observable;
+
+/*
+public class UserProfileActivity extends AppCompatActivity implements RepositoryObserver {
+    private Subject mLeaderboard;
+    private TextView mTextViewUserFullName;
+    private TextView mTextViewUserMinutesWatched;
+
+
+    CREATE VIEWS AND LEADERBOARD
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user_profile);
+
+        mTextViewUserMinutesWatched = (TextView) findViewById(R.id.tv_minutesWatched);
+        mTextViewUserFullName = (TextView) findViewById(R.id.tv_fullname);
+
+        mLeaderboard = UserDataRepository.getInstance();
+        mLeaderboard.registerObserver(this);
+    }
+
+    CHANGES DATA
+    @Override
+    public void onUserDataChanged(String fullname, int minutesWatched) {
+        mTextViewUserFullName.setText(fullname);
+        mTextViewUserAge.setText(minutesWatched);
+    }
+
+    DELETES OBSERVERS
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mLeaderboard.removeObserver(this);
+    }
+}
+*/
+
+public class Leaderboard extends Observable {
+    private String mFullName;
+    private int mMinutesWatched;
+    private static mLeaderboard INSTANCE = null;
+
+    private void mLeaderboard() {
+        getNewDataFromRemote();
+    }
+
+    // RETURNS A SINGLE CLASS INSTANCE, CREATING IT IF NECESSARY
+    public static mLeaderboard getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new mLeaderboard();
+        }
+        return INSTANCE;
+    }
+
+    // SIMULATES NETWORK AND GETS DATA FROM REMOTE
+    private void getNewDataFromRemote() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setUserData("Mgbemena Chike", 102);
+            }
+        }, 10000);
+    }
+
+    /* CHANGES USER DATA ON THE LEADERBOARD ONCE IT GETS THE UPDATED DATA */
+    public void setUserData(String fullName, int numMinutesWatched) {
+        mFullName = fullName;
+        mMinutesWatched = minutesWatched;
+        setMinutesWatched(minutesWatched);
+        notifyObservers();
+    }
+
+    public String getFullName() {
+        return mFullName;
+    }
+
+    public int getNumMinutesWatched() {
+        return mMinutesWatched;
+    }
+}

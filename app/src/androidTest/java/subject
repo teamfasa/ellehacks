@@ -1,0 +1,144 @@
+/**
+ * Created by ANUPYA on 2018-02-02.
+ */
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
+import android.os.Handler;
+import java.util.Observable;
+
+public class Subject {
+
+    private List<Observer> observers = new ArrayList<Observer>();
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+        notifyObservers();
+    }
+
+    public void attach(Observer observer){
+        observers.add(observer);
+    }
+
+    public void notifyAllObservers(){
+        for (Observer observer : observers) {
+            observer.update();
+        }
+    }
+}
+
+public class User extends AppCompatActivity {
+    private Subject mLeaderboard;
+    private TextView mTextViewUserFullName;
+    private TextView mTextViewUserMinutesWatched;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user_profile);
+
+        mTextViewUserMinutesWatched = (TextView) findViewById(R.id.tv_minutesWatched);
+        mTextViewUserFullName = (TextView) findViewById(R.id.tv_fullname);
+
+        mLeaderboard = Leaderboard.getInstance();
+        mLeaderboard.registerObserver(this);
+    }
+
+    @Override
+    public void onUserDataChanged(String fullName, int minutesWatched) {
+        mTextViewUserFullName.setText(fullName);
+        mTextViewUserAge.setText(minutesWatched);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mLeaderboard.removeObserver(this);
+    }
+}
+
+public class Leaderboard extends Observable {
+    // field 'players' that is a hashmap (string fullName, int numMinutesWatched)
+
+    // SET UP THE LEADERBOARD
+    public void init {
+
+        // set up empty players hashmap
+        HashMap<Integer,String> map = new HashMap<Integer,String>();
+        if (INSTANCE == null) {
+            INSTANCE = new mLeaderboard();
+        }
+        private static mLeaderboard INSTANCE = null;
+    }
+
+    // Returns a single instance of this class, creating it if necessary.
+    public static mLeaderboard getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new mLeaderboard();
+        }
+        return INSTANCE;
+    }
+
+    // SETTER
+    public void setUserData(String fullName, int minutesWatched) {
+        mFullName = fullName;
+        mMinutesWatched = minutesWatched;
+        setChanged();
+        notifyObservers();
+    }
+
+    // GETTERS
+    public String getFullName() {
+        return mFullName;
+    }
+    public int getNumMinutesWatched() {
+        return mMinutesWatched;
+    }
+
+    // STORE DATA IN A HASHMAP
+    HashMap<Integer,String> map = new HashMap<Integer,String>();
+
+    // for every element in the array of players, put it in the hashmap
+
+    // SORT THE HASHMAP
+    public LinkedHashMap<Integer, String> sortTop5(
+            HashMap<Integer, String> passedMap) {
+        List<Integer> mapKeys = new ArrayList<>(passedMap.keySet());
+        List<String> mapValues = new ArrayList<>(passedMap.values());
+        Collections.sort(mapValues);
+        Collections.sort(mapKeys);
+
+        LinkedHashMap<Integer, String> sortedMap =
+                new LinkedHashMap<>();
+
+        Iterator<String> valueIt = mapValues.iterator();
+        while (valueIt.hasNext()) {
+            String val = valueIt.next();
+            Iterator<Integer> keyIt = mapKeys.iterator();
+
+            while (keyIt.hasNext()) {
+                Integer key = keyIt.next();
+                String comp1 = passedMap.get(key);
+                String comp2 = val;
+
+                if (comp1.equals(comp2)) {
+                    keyIt.remove();
+                    sortedMap.put(key, val);
+                    break;
+                }
+            }
+        }
+        return sortedMap;
+    }
+
+    LinkedHashMap<Integer,String> top5 = sortTop5(players);
+}
