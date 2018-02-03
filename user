@@ -1,0 +1,9 @@
+import java.util.*;
+
+public class user {
+
+    //calls user  everyitme you register
+    //relate to login activity
+    //goes to home
+
+}
