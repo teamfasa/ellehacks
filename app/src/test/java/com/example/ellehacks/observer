@@ -1,0 +1,67 @@
+package com.example.ellehacks; /**
+ * Created by ANUPYA on 2018-02-02.
+ */
+
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Observer;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Leaderboard {
+
+    // method that sorts the database based on PointsGained, stores the top 5 in an array
+
+    // iterator that gives you the ith element of the top 5 array
+
+    public void top5 {
+
+        /* QUERY THE DATABASE AND ORDER BY POINTS */
+        SELECT * from leaderboard ORDER BY points desc;
+
+    }
+
+    /*
+
+    // STORE DATA IN A HASHMAP
+    HashMap<Integer,String> map = new HashMap<Integer,String>();
+
+    // for every element in the array of players, put it in the hashmap
+
+    // SORT THE HASHMAP
+    public LinkedHashMap<Integer, String> sortTop5(
+            HashMap<Integer, String> passedMap) {
+        List<Integer> mapKeys = new ArrayList<>(passedMap.keySet());
+        List<String> mapValues = new ArrayList<>(passedMap.values());
+        Collections.sort(mapValues);
+        Collections.sort(mapKeys);
+
+        LinkedHashMap<Integer, String> sortedMap =
+                new LinkedHashMap<>();
+
+        Iterator<String> valueIt = mapValues.iterator();
+        while (valueIt.hasNext()) {
+            String val = valueIt.next();
+            Iterator<Integer> keyIt = mapKeys.iterator();
+
+            while (keyIt.hasNext()) {
+                Integer key = keyIt.next();
+                String comp1 = passedMap.get(key);
+                String comp2 = val;
+
+                if (comp1.equals(comp2)) {
+                    keyIt.remove();
+                    sortedMap.put(key, val);
+                    break;
+                }
+            }
+        }
+        return sortedMap;
+    }
+
+    LinkedHashMap<Integer,String> top5 = sortTop5(players);
+    */
+}

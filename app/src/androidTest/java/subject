@@ -2,14 +2,12 @@
  * Created by ANUPYA on 2018-02-02.
  */
 
+import java.util.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
-import android.os.Handler;
 import java.util.Observable;
+import java.util.Observer;
 
 public class Subject {
 
@@ -36,27 +34,19 @@ public class Subject {
     }
 }
 
-public class User extends AppCompatActivity {
-    private Subject mLeaderboard;
-    private TextView mTextViewUserFullName;
-    private TextView mTextViewUserMinutesWatched;
+public class User extends Observable {
+    private String fullName;
+    private int points;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        mTextViewUserMinutesWatched = (TextView) findViewById(R.id.tv_minutesWatched);
-        mTextViewUserFullName = (TextView) findViewById(R.id.tv_fullname);
+        // add to com.example.ellehacks.Database
 
         mLeaderboard = Leaderboard.getInstance();
         mLeaderboard.registerObserver(this);
-    }
-
-    @Override
-    public void onUserDataChanged(String fullName, int minutesWatched) {
-        mTextViewUserFullName.setText(fullName);
-        mTextViewUserAge.setText(minutesWatched);
     }
 
     @Override
@@ -64,81 +54,46 @@ public class User extends AppCompatActivity {
         super.onDestroy();
         mLeaderboard.removeObserver(this);
     }
+
+    @Override
+    public void onUserDataChanged(String fullName, int minutesWatched) {
+        // change it in database
+    }
 }
 
-public class Leaderboard extends Observable {
-    // field 'players' that is a hashmap (string fullName, int numMinutesWatched)
+public class Video extends Observable {
+    private boolean vidLength;
+    private int viewCount = 0;
+    int searchFreq = 0;
 
-    // SET UP THE LEADERBOARD
-    public void init {
+    public void watching() {
+        do {
+            view++;
+        } while (vidLength != true);
 
-        // set up empty players hashmap
-        HashMap<Integer,String> map = new HashMap<Integer,String>();
-        if (INSTANCE == null) {
-            INSTANCE = new mLeaderboard();
+    }
+
+    public boolean isVidLength(boolean vidLength) {
+        if (/*video is over, set vidlength to true*/){
+            vidLength = true;
+        } else {
+            vidLength = false;
         }
-        private static mLeaderboard INSTANCE = null;
+        return vidLength;
+
     }
 
-    // Returns a single instance of this class, creating it if necessary.
-    public static mLeaderboard getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new mLeaderboard();
-        }
-        return INSTANCE;
-    }
+    public int quiz() {
 
-    // SETTER
-    public void setUserData(String fullName, int minutesWatched) {
-        mFullName = fullName;
-        mMinutesWatched = minutesWatched;
-        setChanged();
-        notifyObservers();
-    }
-
-    // GETTERS
-    public String getFullName() {
-        return mFullName;
-    }
-    public int getNumMinutesWatched() {
-        return mMinutesWatched;
-    }
-
-    // STORE DATA IN A HASHMAP
-    HashMap<Integer,String> map = new HashMap<Integer,String>();
-
-    // for every element in the array of players, put it in the hashmap
-
-    // SORT THE HASHMAP
-    public LinkedHashMap<Integer, String> sortTop5(
-            HashMap<Integer, String> passedMap) {
-        List<Integer> mapKeys = new ArrayList<>(passedMap.keySet());
-        List<String> mapValues = new ArrayList<>(passedMap.values());
-        Collections.sort(mapValues);
-        Collections.sort(mapKeys);
-
-        LinkedHashMap<Integer, String> sortedMap =
-                new LinkedHashMap<>();
-
-        Iterator<String> valueIt = mapValues.iterator();
-        while (valueIt.hasNext()) {
-            String val = valueIt.next();
-            Iterator<Integer> keyIt = mapKeys.iterator();
-
-            while (keyIt.hasNext()) {
-                Integer key = keyIt.next();
-                String comp1 = passedMap.get(key);
-                String comp2 = val;
-
-                if (comp1.equals(comp2)) {
-                    keyIt.remove();
-                    sortedMap.put(key, val);
-                    break;
-                }
+        if (/*if vidLength == true, ask if quiz will be taken*/) {
+            System.out.println("Proceed to quiz?");
+            Scanner response = new Scanner(System.in);
+            if(response = "yes"){
+                /*show quiz*/
+            } else {
+                return 0;
             }
         }
-        return sortedMap;
-    }
 
-    LinkedHashMap<Integer,String> top5 = sortTop5(players);
+    }
 }
