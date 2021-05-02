@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class videos {
+    boolean vidLength;
+    int view = 0;
+    int searchFreq = 0;
+
+    public video() {
+        do {
+            view++;
+            searchFreq++;
+        } while (vidLength != true);
+
+    }
+
+    public boolean isVidLength(boolean vidLength) {
+        if (/*video is over, set vidlength to true*/){
+            vidLength = true;
+        } else {
+            vidLength = false;
+        }
+        return vidLength;
+
+    }
+
+    public int quiz() {
+
+        if (/*if vidLength == true, ask if quiz will be taken*/){
+            System.out.println("Proceed to quiz?");
+            Scanner response = new Scanner(System.in);
+            if(response = )
+        }
+
+    }
+}
+
